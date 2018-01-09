@@ -12,6 +12,7 @@ Will the number of human faces in movie poster correlate with the movie rating?
 
 STEP-1:
 Dataset source: https://www.kaggle.com/deepmatrix/imdb-5000-movie-dataset
+movie_metadata.csv
 
 # Face detection from movie posters
 
