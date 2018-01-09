@@ -14,6 +14,13 @@ STEP-1:
 Dataset source: https://www.kaggle.com/deepmatrix/imdb-5000-movie-dataset
 movie_metadata.csv
 
+# Python Notebooks:
+
+Capstone_1_movierecmnd_iter_1.ipynb
+First Capstone Project Comparing Regression Models.ipynb
+Story_Telling_from_IMDB_Movie_dataset.ipynb
+	
+
 # Face detection from movie posters
 
 Will the number of human faces in movie poster correlate with the movie rating?
