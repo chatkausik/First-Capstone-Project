@@ -13,24 +13,11 @@ Will the number of human faces in movie poster correlate with the movie rating?
 STEP-1:
 Dataset source: https://www.kaggle.com/deepmatrix/imdb-5000-movie-dataset
 
-# Insights:
-Regression model can predict the actual imdb_score with less than 50% accuracy based on certain predictors say 'director_facebook_likes','duration', 'actor_1_facebook_likes','actor_2_facebook_likes','actor_3_facebook_likes', 'facenumber_in_poster','title_year', 'budget'.
+# Face detection from movie posters
 
-Since the fitted Random Forest/Bayesian model explains more variability than that of multiple linear regression, I will use the results from Random Forest/Bayesian to explain the insights found so far:
+Will the number of human faces in movie poster correlate with the movie rating?
 
-The most important factor that affects movie rating is the duration. The longer the movie is, the higher the rating will be.
-
-Budget is important, although there is no strong correlation between budget and movie rating.
-
-The facebook popularity of director is an important factor to affect a movie rating.
-
-The facebook popularity of the top 3 actors/actresses is important.
-
-The number of faces in movie poster has a non-neglectable effect to the movie rating.
-
-After discretizing the imdb_score to two categories Bad (0 to 7.5) and good(7.6 to 10) and fit to different classification models say Decision Tree, RandomForest and Logistic Regression, i am getting 82% of average model prediction accuracy with 18% error prediction rate for the test. That's good actually.
-
-Whereas with original IMDB_score, different regression models can predict only with 47% accuracy.
+Movie poster is an important way to make public aware of the movie before its release. It is quite common to see faces in movie posters. It should be pointed out that, most movies have more than one posters. Some may argue it is unreliable to detect faces only from one poster. Well, it is indeed true. However, just like a great book usually having a single cover, I believe a great movie needs to have a "main" poster, the one that the director likes most, or long-remembered by viewers. I have no way to tell which posters are the "main" posters. I assume the poster that I webscraped from IMDB main page of a movie is the "main" poster.
 
 # Correlation analysis
 Choosing 15 continuous variables, I plotted the correlation matrix below. Note that "imdb_score" in the matrix denote the IMDB rating score of a movie. The matrix reveals that:
@@ -55,3 +42,21 @@ The "imdb_score" has small but negative correlation with "facenumber_in_poster".
 
 The "imdb_score" has almost no correlation with "budget". Throwing money at a movie will not necessarily make it great.
 
+# Insights:
+Regression model can predict the actual imdb_score with less than 50% accuracy based on certain predictors say 'director_facebook_likes','duration', 'actor_1_facebook_likes','actor_2_facebook_likes','actor_3_facebook_likes', 'facenumber_in_poster','title_year', 'budget'.
+
+Since the fitted Random Forest/Bayesian model explains more variability than that of multiple linear regression, I will use the results from Random Forest/Bayesian to explain the insights found so far:
+
+The most important factor that affects movie rating is the duration. The longer the movie is, the higher the rating will be.
+
+Budget is important, although there is no strong correlation between budget and movie rating.
+
+The facebook popularity of director is an important factor to affect a movie rating.
+
+The facebook popularity of the top 3 actors/actresses is important.
+
+The number of faces in movie poster has a non-neglectable effect to the movie rating.
+
+After discretizing the imdb_score to two categories Bad (0 to 7.5) and good(7.6 to 10) and fit to different classification models say Decision Tree, RandomForest and Logistic Regression, i am getting 82% of average model prediction accuracy with 18% error prediction rate for the test. That's good actually.
+
+Whereas with original IMDB_score, different regression models can predict only with 47% accuracy.
