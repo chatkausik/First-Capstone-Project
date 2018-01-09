@@ -32,3 +32,26 @@ After discretizing the imdb_score to two categories Bad (0 to 7.5) and good(7.6 
 
 Whereas with original IMDB_score, different regression models can predict only with 47% accuracy.
 
+# Correlation analysis
+Choosing 15 continuous variables, I plotted the correlation matrix below. Note that "imdb_score" in the matrix denote the IMDB rating score of a movie. The matrix reveals that:
+
+The "cast_total_facebook_likes" has a strong positive correlation with the "actor_1_facebook_likes", and has smaller positive correlation with both "actor_2_facebook_likes" and "actor_3_facebook_likes".
+
+The "movie_facebook_likes" has strong correlation with "num_critic_for_reviews", meaning that the popularity of a movie in social network can be largely affected by the critics.
+
+The "movie_facebook_likes" has relatively large correlation with the "num_voted_users".
+
+The movie "gross" has strong positive correlation with the "num_voted_users".
+
+Surprisingly, there are some pairwise correlations that are perhaps counter-intuitive:
+
+The "imdb_score" has very small but positive correlation with the "director_facebook_likes", meaning a popular director does not necessarily mean his directed movie is great.
+
+The "imdb_score" has very small but positive correlation with the "actor_1_facebook_likes", meaning that an actor is popular in social network does not mean that a movie is high rating if he is the leading actor. So do supporting actors.
+
+The "imdb_score" has small but positive correlation with "duration". Long movies tend to have high rating.
+
+The "imdb_score" has small but negative correlation with "facenumber_in_poster". It is perhaps not a good idea to have many faces in movie poster if a movie wants to be great.
+
+The "imdb_score" has almost no correlation with "budget". Throwing money at a movie will not necessarily make it great.
+
