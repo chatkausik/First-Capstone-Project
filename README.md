@@ -21,6 +21,8 @@ Capstone_1_movierecmnd_iter_1.ipynb
 First Capstone Project Comparing Regression Models.ipynb
 
 Story_Telling_from_IMDB_Movie_dataset.ipynb
+
+Refer to my repository https://github.com/chatkausik/Performing-RNNs-for-sentiment-analysis-of-movie-review-character-level-language-modelling for movie review sentiment analysis and character level language modelling.
 	
 
 # Face detection from movie posters
