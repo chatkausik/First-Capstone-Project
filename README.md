@@ -17,15 +17,15 @@ unreliable.
 
 3. Predicting IMDB Score of a movie before it released in cinemas is my primary goal
 for this project without relying on critic’s review data and human instincts data along
-with movie review sentiment analysis and character level language modelling.
+with movie review sentiment analysis.
 
 4. This will benefit all cinema lovers like me or film producers/directors who can get a
 high of overview of the probable score of the new movie they are releasing like a
 pre-poll forecast.
 
 ## Question:
-## How to recommend IMDB Movie Score(Score ranges from 0-Low to 10-Excellent) for the new movies?
-## How to identify bad(0) or good(1) sentiment from Movie reviews?
+## How to recommend IMDB Movie Score(Score ranges from 0-Low to 10-Excellent) for the new movies? Refer to "Capstone_1_movierecmnd_iter_1.ipynb" for details.
+## How to identify bad(0) or good(1) sentiment from Movie reviews? Refer to the "Sentiment Analysis of Movie Reviews using multilayer RNNs.ipynb" for details.
 
 5. We have 28 in-dependent variables that I scraped from IMDB site. Roughly
 speaking, half of the variables are directly related to movies themselves, such as
