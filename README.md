@@ -1,7 +1,6 @@
 ## Project: IMDB Movie score recommender & Movie review sentiment analysis.
-## by Kausik Chattapadhyay (chat.kausik@gmail.com) 
-
-## Stages in the Data Science Life Cycle:
+ 
+## Data Science Life Cycles:
 
 ## STEP-1 Purpose, motivation and description:
 
@@ -209,11 +208,178 @@ separate training dataset (80 percent of the data) and a separate test dataset
 Logistic Regression, i am getting 82% of average model prediction accuracy with
 18% error prediction rate for the test.
 
+# Logistic Regression:
+I used logistic regression because it’s most powerful for linear and binary
+classification (good/bad). Performs very well on linearly separable classes as
+probalistic model. When I used all the 28 features, I am having overfitting
+problem due to too many parameters and my model works well with training
+data but does not generalize well with unseen data. After removing the
+unnecessary features and to find a good bias-variance trade-off is to tune the
+complexity of the model via regularization. Regularization is a very useful
+method to handle high collinearity among features, filter out noise from data
+and eventually prevent overfitting. So I introduce bias to penalize extreme
+weight values by L2 regularization parameter lambda. By increasing lambda,
+we increase regularization strength. We have another parameter C which is
+inverse to lambda. Decreasing the value of the inverse regularization
+parameter C means that we are increasing the regularization strength. BY
+plotting weight co-efficient as y and C and X, I see that weight co-efficient
+shrink if we decrease the parameter C, that is, we increase the regularization
+strength. With grid searching cross validation, I have correctly identified
+C=0.01 value for my model to get 82% training accuracy and 85% test
+accuracy.
 
-# Insights:
-Regression model can predict the actual imdb_score with less than 50% accuracy based on certain predictors say 'director_facebook_likes','duration', 'actor_1_facebook_likes','actor_2_facebook_likes','actor_3_facebook_likes', 'facenumber_in_poster','title_year', 'budget'.
+# Decision Tree: 
+We start with the root and split the data that results the largest
+information gain. In an iterative process, we can then repeat this splitting
+procedure at each child until the leaves are pure. This means that the
+samples at each node all belong to the same class. This can result in a deep
+tree with many nodes, which can easily lead to overfitting. Thus, we want to
+prune the tree by setting a maximal depth of the tree. Impurity measures or
+splitting criteria are commonly used in binary decision tree gini
+impurity/entropy impurity. I use max_depth of 3 and then tuned this hyper
+parameter to gate correct accuracy.
 
-Since the fitted Random Forest/Bayesian model explains more variability than that of multiple linear regression, I will use the results from Random Forest/Bayesian to explain the insights found so far:
+# Random Forests: 
+Gain his popularity because of classification performance,
+scalability and easy to use. Ensemble of decision trees. It average multiple
+deep decision trees that individually suffer from high variance, to build a more
+robust model that has a better generalization performance and is less
+susceptible to overfitting.
+
+Select n bootstrap samples (randomly select n samples with
+replacement). Grow a decision tree from the bootstrap sample. At each node
+randomly select d features without replacement. Split the node using features
+that provides best info gain.
+
+Aggregate the prediction using majority voting.
+
+Advantages:
+
+We don’t have worry too much with hyper parameter values. We typically
+don’t need to prune the random forest since the ensemble model is quite
+robust to noise from individual decision trees. Only parameter is number of
+trees k.larger the number of trees, better performance of the random forest at
+the cost of higher computional cost.
+
+I have choosen n_estimators=10 no of trees and get 81% accuracy score.
+
+# XGBOOSTING:
+
+XGboost is an implementation of the gradient boosted decision trees
+algorithm which is very good with tabular data.
+
+We go through the cycles that repeatedly builds new models and combine
+them into an ensemble model. We start the cycle by calculating the errors for
+each observation in the dataset. We then build a new model to predict those.
+We add predictions from this error predicting models to the ensemble of
+models.
+
+To make a prediction, we add the predictions from all previous models. We
+can ue these predictions to calculate new errors, build the next model, and
+add it to the ensemble.
+
+XGboost has a few parameters that can affect my model accuracy and
+training speed.
+
+N_estimators specifies how many times to go through the modeling cycle.
+Too low a value can cause under fitting,which is inaccurate predictions for
+both training and evaluation. Too large a value can cause overfitting. values
+between 100-1000 and depend a lot with Learning rate.
+
+early_stopping_round causes model to stop iterating when the validation
+score stops improving, even if we aren’t at the hard stop for n_estimators. It’s
+smart to set high value of n_estimators and then use early_stopping_rounds
+to find the optimal time to stop iterating. I choose early stopping round as 5
+randomly.
+
+Learning_rate:
+
+I did some tricks, instead of getting predictions by simple adding up the
+predictions from each component model, we will multiply the predictions from
+each model by a small number before adding them in. This means each tree
+we add to the ensemble helps us less. In practice, this reduces models’s
+propensity to overfit.in general a small learning rate and large number of of
+estimators will yield more accurate result, though it will also take the model
+longer to train since it does more ierations through the cycle.
+
+I use n estimators of 100 and learning rate of 0.05. Get 87% accuracy from it.
+
+# Building an RNN model:
+
+I have implemented SentimentRNN class that has the following methods:
+
+1. A constructor to set all the model parameters and then create a
+computational graph and call the self. build method to build the multilayer
+RNN.
+
+2. A build method that declares three placeholders for input data, input labels,
+and the keep-probability for the dropout configuration of the hidden layer.
+After declaring this, it creates an embedding layer and builds the multilayer
+RNN.
+
+3. A train method that creates a TensorFlow session for launching the
+computational graph, iterates through the mini batches of data, and runs for a
+fixed number of epochs, to minimize the cost function defined in the graph.
+This method also saves the model after 10 epochs for checkpointing.
+
+4. A predict method that creates a new session, restores the last checkpoint
+saved during the training process, and carries out the predictions for the test
+data.
+
+## Evaluation:
+1. A model can suffer from under fitting (high bias) if the model is too simple
+or it can over fit the training data (high variance) if the model is too complex
+for the underlying training data. Overfitting is a common problem in ML,
+where the model performs well on training data but does not generalize well
+to unseen data (test data). Overfitting can be caused by too many parameters
+that lead to a model that is too complex. On the other hand, under fitting (high
+bias), which means that our model is not complex enough to capture the
+pattern in the training data well and therefore suffer from low performance on
+unseen data. To get a bias variance tradeoff, we need to evaluate our model
+carefully.
+
+2. We used popular holdout method where we split the data into train,
+validation and test set. Training set is used to fit the different models and
+validation is used for hyper parameter tuning or model selection. Separating
+out the test set can obtain a less biased estimate of its ability to generalize to
+new data. Disadvantages is that depending on the random data split,
+estimate will vary.
+
+3. Then I use K-fold cross validation with k=10 where we randomly split the
+training dataset into k folds without replacement, where (k-1) folds are used
+for the model training and 1-fold is used for performance evaluation. This
+procedure is repeated k times so that we obtain k models and performance
+estimates. Average the performance.
+
+4. Since we are working with small training set, I increased the number of folds,
+that means more training data will be used in each iteration which result in
+low bias towards estimating the generalization performance by averaging the
+individual model estimates.
+
+5. We evaluated my models using model accuracy, which is a useful metric with
+which to quantify the performance of a model in general. I also used
+precision, recall, F1 score evaluation using confusion matrix.
+The diagonal elements represent the number of points for which the predicted
+label is equal to the true label, while off-diagonal elements are those that are
+mislabeled by the classifier. The higher the diagonal values of the confusion
+matrix the better, indicating many correct predictions.
+
+6. In machine learning, we have two type of parameters: those that are learned
+from the training data, for example weights in logistic regression and the
+hyper parameters that are optimized separately, for example regularization
+parameter in logistic regression or the depth parameter of decision tree. I
+used grid search to help improve model performance by tuning
+hyperparameters. For my logistic regression model, grid search gave me
+learning rate C with value 0.01 can improve my accuracy score to 85% from
+81% for both training and test data.
+
+7. We can optimize the RNN further by changing the hyperparamaters
+lstm_size, seq_len, embed_size to achieve better performance.
+
+## STEP-8 Conclusion:
+1. Regression model can predict the actual imdb_score with less than 50% accuracy based on certain predictors say 'director_facebook_likes','duration', 'actor_1_facebook_likes','actor_2_facebook_likes','actor_3_facebook_likes', 'facenumber_in_poster','title_year', 'budget'.
+
+2. Since the fitted Random Forest/Bayesian model explains more variability than that of multiple linear regression, I will use the results from Random Forest/Bayesian to explain the insights found so far:
 
 The most important factor that affects movie rating is the duration. The longer the movie is, the higher the rating will be.
 
@@ -225,6 +391,8 @@ The facebook popularity of the top 3 actors/actresses is important.
 
 The number of faces in movie poster has a non-neglectable effect to the movie rating.
 
-After discretizing the imdb_score to two categories Bad (0 to 7.5) and good(7.6 to 10) and fit to different classification models say Decision Tree, RandomForest and Logistic Regression, i am getting 82% of average model prediction accuracy with 18% error prediction rate for the test. That's good actually.
+3. After discretizing the imdb_score to two categories Bad (0 to 5) and good(6 to 10) and fit to different classification models say Decision Tree, RandomForest, XGBoosting and Logistic Regression, i am getting 82% of average model prediction accuracy with 18% error prediction rate for the test. That's good actually.
 
-Whereas with original IMDB_score, different regression models can predict only with 47% accuracy.
+4. RNN Sentiment model can predict the sentiment with 82% accuracy.
+
+
