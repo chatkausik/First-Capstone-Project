@@ -326,7 +326,7 @@ This method also saves the model after 10 epochs for checkpointing.
 saved during the training process, and carries out the predictions for the test
 data.
 
-## Evaluation:
+## STEP-7 Evaluation:
 1. A model can suffer from under fitting (high bias) if the model is too simple
 or it can over fit the training data (high variance) if the model is too complex
 for the underlying training data. Overfitting is a common problem in ML,
